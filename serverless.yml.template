@@ -5,11 +5,11 @@ provider:
   stage: dev
   region: us-east-1
   environment:
-    AWS_ACCESS_KEY: $AWS_ACCESS_KEY
-    AWS_ACCESS_SECRET: $AWS_ACCESS_SECRET
-    TABLE_NAME: $TABLE_NAME
-    REGION: $REGION
-    SECRET: $SECRET
+    AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+    AWS_ACCESS_SECRET: ${AWS_ACCESS_SECRET}
+    TABLE_NAME: ${TABLE_NAME}
+    REGION: ${REGION}
+    SECRET: ${SECRET}
 functions:
   server:
     handler: index.server
