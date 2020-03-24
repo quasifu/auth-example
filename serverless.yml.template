@@ -1,0 +1,18 @@
+service: auth-example
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+   environment:
+    AWS_ACCESS_KEY: $AWS_ACCESS_KEY
+    AWS_ACCESS_SECRET: $AWS_ACCESS_SECRET
+    TABLE_NAME: $TABLE_NAME
+    REGION: $REGION
+    SECRET: $SECRET
+functions:
+  server:
+    handler: index.server
+    events:
+      - http: ANY /
+      - http: "ANY {proxy+}"

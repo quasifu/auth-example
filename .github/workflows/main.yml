@@ -1,0 +1,39 @@
+name: Build Auth-Example
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    env:
+      SLACK_URL: ${{ secrets.SLACK_URL }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - uses: expo/expo-github-action@v4
+        with:
+          TABLE_NAME: ${{secrets.TABLE_NAME}}
+          REGION: ${{secrets.REGION}}
+          SECRET: ${{secrets.SECRET}}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_ACCESS_SECRET: ${{ secrets.AWS_ACCESS_SECRET }}
+      - run: |
+          eval "echo \"$(cat serverless.yml.template)\"" > serverless.yml
+      - name: Run install
+        run: npm install
+      - name: serverless deploy
+        uses: serverless/github-action@master
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET }}
