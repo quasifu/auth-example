@@ -23,10 +23,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Create environment variables
-        run: eval "echo \"$(cat serverless.yml.template)\"" > serverless.yml
       - name: Run install
         run: npm install
+      - name: Create environment variables
+        run: eval "echo \"$(cat serverless.yml.template)\"" > serverless.yml
       - name: serverless deploy
         uses: serverless/github-action@master
         with:
